@@ -32,7 +32,7 @@ public class Produto {
     public BigDecimal valorMinimo;
 
     @Column(name = "perfil_recomendado", nullable = false)
-    public String perfilRecomendado;
+    public String perfil;
 
     @Column(nullable = false)
     public Boolean ativo;
@@ -40,14 +40,14 @@ public class Produto {
     public LocalDateTime criadoEm = LocalDateTime.now();
 
     public Produto(String nome, String tipo, BigDecimal rentabilidade, String risco, Integer prazoMinimoMeses,
-                   BigDecimal valorMinimo, String perfilRecomendado, Boolean ativo) {
+                   BigDecimal valorMinimo, String perfil, Boolean ativo) {
         this.nome = nome;
         this.tipo = tipo;
         this.rentabilidade = rentabilidade;
         this.risco = risco;
         this.prazoMinimoMeses = prazoMinimoMeses;
         this.valorMinimo = valorMinimo;
-        this.perfilRecomendado = perfilRecomendado;
+        this.perfil = perfil;
         this.ativo = ativo;
     }
 
@@ -105,12 +105,12 @@ public class Produto {
         this.valorMinimo = valorMinimo;
     }
 
-    public String getPerfilRecomendado() {
-        return perfilRecomendado;
+    public String getPerfil() {
+        return perfil;
     }
 
-    public void setPerfilRecomendado(String perfilRecomendado) {
-        this.perfilRecomendado = perfilRecomendado;
+    public void setPerfil(String perfil) {
+        this.perfil = perfil;
     }
 
     public Boolean getAtivo() {

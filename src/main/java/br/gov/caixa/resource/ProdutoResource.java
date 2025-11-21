@@ -49,6 +49,15 @@ public class ProdutoResource {
 
     }
 
+    @GET
+    @Path("/produtos-recomendados/{perfil}")
+    //@RolesAllowed({"user"})
+    public Response getRecomendadosPerfil(@PathParam("perfil") String perfil){
+        List<ProdutoDto> produtos = produtoService.getRecomendados(perfil);
+        return Response.status(Response.Status.OK).entity(produtos).build();
+
+    }
+
     @PUT
     @Path("/{id}")
     @Transactional

@@ -13,7 +13,7 @@ public class ProdutoMapper {
         produto.setRisco(produtoDto.getRisco());
         produto.setPrazoMinimoMeses(produtoDto.getPrazoMinimoMeses());
         produto.setValorMinimo(produtoDto.getValorMinimo());
-        produto.setPerfilRecomendado(produtoDto.getPerfilRecomendado());
+        produto.setPerfil(produtoDto.getPerfilRecomendado());
         return produto;
     }
 
@@ -25,7 +25,7 @@ public class ProdutoMapper {
         produtoDto.setRisco(produto.getRisco());
         produtoDto.setPrazoMinimoMeses(produto.getPrazoMinimoMeses());
         produtoDto.setValorMinimo(produto.getValorMinimo());
-        produtoDto.setPerfilRecomendado(produto.getPerfilRecomendado());
+        produtoDto.setPerfilRecomendado(produto.getPerfil());
         return produtoDto;
     }
 
@@ -36,7 +36,7 @@ public class ProdutoMapper {
         produto.setRisco(produtoDto.getRisco());
         produto.setPrazoMinimoMeses(produtoDto.getPrazoMinimoMeses());
         produto.setValorMinimo(produtoDto.getValorMinimo());
-        produto.setPerfilRecomendado(produtoDto.getPerfilRecomendado());
+        produto.setPerfil(produtoDto.getPerfilRecomendado());
         return produto;
     }
 

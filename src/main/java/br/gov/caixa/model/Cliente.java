@@ -1,6 +1,6 @@
 package br.gov.caixa.model;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -34,6 +34,8 @@ public class Cliente{
 
 
     public LocalDateTime dataAtualizacao = LocalDateTime.now();
+
+    public Cliente(){}
 
     public Cliente(String perfil, Integer pontuacao, String descricao, BigDecimal volumeInvestimentos,
                    Integer frequenciaMovimentacoes, Boolean preferenciaLiquidez) {

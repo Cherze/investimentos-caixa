@@ -1,5 +1,6 @@
 package br.gov.caixa.repository;
 
+import br.gov.caixa.dto.ProdutoDto;
 import br.gov.caixa.model.Produto;
 import br.gov.caixa.model.Simulacao;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
@@ -19,5 +20,9 @@ public class ProdutoRepository implements PanacheRepository<Produto> {
     }
     public Produto findByTipo(String tipo){
         return find("tipo", tipo).firstResult();
+    }
+
+    public List<Produto> findByPerfil(String perfil) {
+        return find("perfil", perfil).stream().toList();
     }
 }

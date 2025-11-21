@@ -37,7 +37,6 @@ public class ProdutoService {
 
 
     public ProdutoDto getById(long id) {
-        Log.info("Buscando do BANCO.");
         Produto produto = produtoRepository.findById(id);
         this.isNull(produto);
         return ProdutoMapper.toDto(produto);
@@ -72,4 +71,9 @@ public class ProdutoService {
         }
     }
 
+    public List<ProdutoDto> getRecomendados(String perfil) {
+       //List<Produto> produtos = produtoRepository.findByPerfil(perfil);
+       //return ProdutoMapper.toDto(produtos);
+        return produtoRepository.findByPerfil(perfil).stream().map(ProdutoMapper::toDto).toList();
+    }
 }
