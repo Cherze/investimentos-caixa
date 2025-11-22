@@ -2,7 +2,9 @@ package br.gov.caixa.resource;
 
 import br.gov.caixa.dto.ProdutoDto;
 import br.gov.caixa.model.Produto;
+import br.gov.caixa.model.Simulacao;
 import br.gov.caixa.service.ProdutoService;
+import br.gov.caixa.service.TelemetriaService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
@@ -19,9 +21,11 @@ import java.util.List;
 public class ProdutoResource {
 
     public final ProdutoService produtoService;
+    public final TelemetriaService telemetriaService;
 
-    public ProdutoResource(ProdutoService produtoService) {
+    public ProdutoResource(ProdutoService produtoService, TelemetriaService telemetriaService) {
         this.produtoService = produtoService;
+        this.telemetriaService = telemetriaService;
     }
 
     @POST
@@ -53,8 +57,15 @@ public class ProdutoResource {
     @Path("/produtos-recomendados/{perfil}")
     //@RolesAllowed({"user"})
     public Response getRecomendadosPerfil(@PathParam("perfil") String perfil){
-        List<ProdutoDto> produtos = produtoService.getRecomendados(perfil);
-        return Response.status(Response.Status.OK).entity(produtos).build();
+        long inicio = System.currentTimeMillis();
+        try {
+            List<ProdutoDto> produtos = produtoService.getRecomendados(perfil);
+            return Response.status(Response.Status.OK).entity(produtos).build();
+        }finally{
+            long fim = System.currentTimeMillis();
+            telemetriaService.registrarMetrica("produtos-recomendados/perfil", fim - inicio);
+        }
+
 
     }
 

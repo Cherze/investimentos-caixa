@@ -2,6 +2,7 @@ package br.gov.caixa.resource;
 
 import br.gov.caixa.dto.ClientePerfilRiscoResponse;
 import br.gov.caixa.service.ClientePerfilRiscoService;
+import br.gov.caixa.service.TelemetriaService;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
@@ -22,21 +23,25 @@ public class ClientePerfilRiscoResource {
 
     @Inject
     ClientePerfilRiscoService clientePerfilRiscoService;
+    @Inject
+    TelemetriaService telemetriaService;
 
     @GET
     @Path("/{clienteId}")
     @RolesAllowed("user")
     @Operation(summary = "Obter perfil de risco", description = "Retorna o perfil de risco calculado para o cliente")
     public Response obterPerfilRisco(@PathParam("clienteId") Long clienteId) {
-        Optional<ClientePerfilRiscoResponse> perfil = clientePerfilRiscoService.obterPerfilRisco(clienteId);
-
-        if (perfil.isPresent()) {
-            return Response.ok(perfil.get()).build();
-        } else {
-            // Se não existe, calcula um novo perfil
-            //ClientePerfilRiscoResponse novoPerfil = clientePerfilRiscoService.calcularPerfilRisco(clienteId);
-            //return Response.ok(novoPerfil).build();
-            return Response.status(Response.Status.NOT_FOUND).build();
+        long inicio = System.currentTimeMillis();
+        try {
+            ClientePerfilRiscoResponse perfil = clientePerfilRiscoService.calcularPerfilRisco(clienteId);
+            if (perfil.pontuacao!=0) {
+                return Response.ok(perfil).build();
+            } else {
+                return Response.status(Response.Status.NOT_FOUND).entity("Cliente " + clienteId + " : " + perfil.descricao).build();
+            }
+        }finally{
+            long fim = System.currentTimeMillis();
+            telemetriaService.registrarMetrica("perfil-risco/cliente", fim - inicio);
         }
     }
 }

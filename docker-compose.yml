@@ -1,0 +1,37 @@
+# docker-compose.yml
+
+services:
+  investment-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: investment-app
+    ports:
+      - "8080:8080"
+    environment:
+      # H2 Database em memória
+      QUARKUS_DATASOURCE_DB_KIND: h2
+      QUARKUS_DATASOURCE_JDBC_URL: jdbc:h2:mem:investments;DB_CLOSE_DELAY=-1
+      QUARKUS_DATASOURCE_USERNAME: sa
+      QUARKUS_DATASOURCE_PASSWORD:
+
+      # Hibernate - criar schema automaticamente
+      QUARKUS_HIBERNATE_ORM_DATABASE_GENERATION: drop-and-create
+      QUARKUS_HIBERNATE_ORM_SQL_LOAD_SCRIPT: import.sql
+
+      # Segurança desabilitada para simplificar
+      QUARKUS_OIDC_ENABLED: false
+
+      # HTTP
+      QUARKUS_HTTP_PORT: 8080
+      QUARKUS_HTTP_HOST: 0.0.0.0
+
+      # Logging
+      QUARKUS_LOG_LEVEL: INFO
+      QUARKUS_LOG_CATEGORY__COM_INVESTMENT_LEVEL: DEBUG
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/q/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
