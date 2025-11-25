@@ -37,7 +37,7 @@ public class Produto {
     @Column(nullable = false)
     public Boolean ativo;
 
-    public LocalDateTime criadoEm = LocalDateTime.now();
+    //public LocalDateTime criadoEm = LocalDateTime.now();
 
     public Produto(String nome, String tipo, BigDecimal rentabilidade, String risco, Integer prazoMinimoMeses,
                    BigDecimal valorMinimo, String perfil, Boolean ativo) {
@@ -121,10 +121,10 @@ public class Produto {
         this.ativo = ativo;
     }
 
-    public void setCriadoEm(LocalDateTime criadoEm) {
-        this.criadoEm = criadoEm;
-    }
-    public LocalDateTime getCriadoEm() {
-        return criadoEm;
-    }
+    //public void setCriadoEm(LocalDateTime criadoEm) {
+       // this.criadoEm = criadoEm;
+   // }
+    //public LocalDateTime getCriadoEm() {
+        //return criadoEm;
+    //}
 }

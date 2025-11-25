@@ -5,15 +5,24 @@ import br.gov.caixa.model.Telemetria;
 import br.gov.caixa.dto.TelemetriaResponse;
 import io.quarkus.scheduler.Scheduled;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
 import jakarta.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Logger;
 
 @ApplicationScoped
 public class TelemetriaService {
 
+    //private static final Logger LOG = Logger.getLogger(TelemetriaService.class);
+
+    @Inject
+    EntityManager entityManager;
     // Cache em memória para melhor performance
     private final Map<String, List<Long>> metricasTemporarias = new ConcurrentHashMap<>();
 
@@ -21,36 +30,6 @@ public class TelemetriaService {
     public void registrarMetrica(String servico, Long tempoRespostaMs) {
         Telemetria metrica = new Telemetria(servico, tempoRespostaMs);
         metrica.persist();
-    }
-
-    // Método assíncrono para não bloquear a resposta
-    public void registrarMetricaAsync(String servico, Long tempoRespostaMs, Boolean sucesso) {
-        // Armazenar temporariamente em memória
-        metricasTemporarias
-                .computeIfAbsent(servico, k -> new ArrayList<>())
-                .add(tempoRespostaMs);
-
-        // Persistir em lote a cada 10 registros para melhor performance
-        if (metricasTemporarias.values().stream().mapToInt(List::size).sum() >= 10) {
-            persistirMetricasEmLote();
-        }
-    }
-
-    @Transactional
-    protected void persistirMetricasEmLote() {
-        metricasTemporarias.forEach((servico, tempos) -> {
-            tempos.forEach(tempo -> {
-                Telemetria metrica = new Telemetria(servico, tempo);
-                metrica.persist();
-            });
-        });
-        metricasTemporarias.clear();
-    }
-
-    // Agendado para persistir métricas pendentes a cada minuto
-    @Scheduled(every = "1m")
-    void persistirMetricasPendentes() {
-        persistirMetricasEmLote();
     }
 
     public TelemetriaResponse obterDadosTelemetria() {
@@ -135,31 +114,5 @@ public class TelemetriaService {
         }
 
         return servicos;
-    }
-
-    // Método para obter estatísticas de um serviço específico
-    public TelemetriaResponse.ServicoMetrica obterMetricasServico(String servico, int dias) {
-        LocalDateTime inicio = LocalDateTime.now().minusDays(dias);
-        LocalDateTime fim = LocalDateTime.now();
-
-        Object[] resultado = (Object[]) Telemetria.getEntityManager()
-                .createNativeQuery(
-                        "SELECT COUNT(*) as quantidade_chamadas, " +
-                                "       AVG(tempo_resposta_ms) as media_tempo_resposta, " +
-                                "       MIN(tempo_resposta_ms) as menor_tempo, " +
-                                "       MAX(tempo_resposta_ms) as maior_tempo " +
-                                "FROM telemetria " +
-                                "WHERE servico = :servico AND data_hora >= :inicio AND data_hora < :fim"
-                )
-                .setParameter("servico", servico)
-                .setParameter("inicio", inicio)
-                .setParameter("fim", fim)
-                .getSingleResult();
-
-        Long quantidadeChamadas = ((Number) resultado[0]).longValue();
-        Double mediaTempoResposta = resultado[1] != null ?
-                ((Number) resultado[1]).doubleValue() : 0.0;
-
-        return new TelemetriaResponse.ServicoMetrica(servico, quantidadeChamadas, mediaTempoResposta);
     }
 }

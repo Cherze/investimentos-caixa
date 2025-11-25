@@ -1,6 +1,6 @@
 package br.gov.caixa.resource;
 
-import br.gov.caixa.dto.ProdutoDto;
+
 import br.gov.caixa.model.HistoricoInvestimento;
 import br.gov.caixa.repository.HistoricoInvestimentoRepository;
 import br.gov.caixa.service.TelemetriaService;

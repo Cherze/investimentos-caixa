@@ -13,7 +13,6 @@ import jakarta.annotation.security.RolesAllowed;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -46,7 +45,7 @@ public class SimulacaoResource {
     @APIResponse(responseCode = "200", description = "Simulação realizada com sucesso")
     @APIResponse(responseCode = "400", description = "Dados de entrada inválidos")
     //@RolesAllowed({"admin"})
-    public Response addSimulacao(@Valid SimulacaoRequest request){
+    public Response addSimulacao(SimulacaoRequest request){
         long inicio = System.currentTimeMillis();
         try {
             SimulacaoResponse response = simulacaoService.simularInvestimento(request);
