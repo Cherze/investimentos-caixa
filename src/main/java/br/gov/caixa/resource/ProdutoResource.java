@@ -4,6 +4,7 @@ package br.gov.caixa.resource;
 import br.gov.caixa.model.Produto;
 import br.gov.caixa.service.ProdutoService;
 import br.gov.caixa.service.TelemetriaService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -27,7 +28,7 @@ public class ProdutoResource {
     }
 
     @GET
-    //@RolesAllowed({"user"})
+    @RolesAllowed({"user"})
     public Response getProduto(){
         List<Produto> produtos = produtoService.getAll();
         return Response.status(Response.Status.OK).entity(produtos).build();
@@ -37,7 +38,7 @@ public class ProdutoResource {
 
     @GET
     @Path("/produtos-recomendados/{perfil}")
-    //@RolesAllowed({"user"})
+    @RolesAllowed({"user"})
     public Response getRecomendadosPerfil(@PathParam("perfil") String perfil){
         long inicio = System.currentTimeMillis();
         try {

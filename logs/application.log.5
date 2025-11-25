@@ -1,70 +1,10 @@
-2025-11-25 14:07:37,694 bluejays-lenovo /usr/lib/jvm/java-21-openjdk-amd64/bin/java[186778] INFO  [io.qua.test] (Test runner thread) Running 1/0. Running: #JUnit Jupiter
-2025-11-25 14:07:47,028 bluejays-lenovo /usr/lib/jvm/java-21-openjdk-amd64/bin/java[186778] ERROR [io.qua.ver.htt.run.QuarkusErrorHandler] (executor-thread-1) HTTP Request to /simulacoes/simular-investimento failed, error id: 05db40b9-3f06-4e9c-8198-9f1352fead80-1
-
-Exception in SimulacaoService.java:39
-	  37  
-	  38          if (produtoOpt.isEmpty()) {
-	→ 39              throw new IllegalArgumentException("Produto não encontrado ou não atende aos critérios");
-	  40          }
-	  41  
-
-Exception in SimulacaoResource.java:51
-	  49          long inicio = System.currentTimeMillis();
-	  50          try {
-	→ 51              SimulacaoResponse response = simulacaoService.simularInvestimento(request);
-	  52              return Response.status(Response.Status.CREATED).entity(response).build();
-	  53          }finally {: java.lang.IllegalArgumentException: Produto não encontrado ou não atende aos critérios
-	at br.gov.caixa.service.SimulacaoService.simularInvestimento(SimulacaoService.java:39)
-	at br.gov.caixa.service.SimulacaoService_Subclass.simularInvestimento$$superforward(Unknown Source)
-	at br.gov.caixa.service.SimulacaoService_Subclass$$function$$4.apply(Unknown Source)
-	at io.quarkus.arc.impl.AroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:73)
-	at io.quarkus.arc.impl.AroundInvokeInvocationContext$NextAroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:97)
-	at io.quarkus.hibernate.validator.runtime.interceptor.AbstractMethodValidationInterceptor.validateMethodInvocation(AbstractMethodValidationInterceptor.java:71)
-	at io.quarkus.hibernate.validator.runtime.interceptor.MethodValidationInterceptor.validateMethodInvocation(MethodValidationInterceptor.java:17)
-	at io.quarkus.hibernate.validator.runtime.interceptor.MethodValidationInterceptor_Bean.intercept(Unknown Source)
-	at io.quarkus.arc.impl.InterceptorInvocation.invoke(InterceptorInvocation.java:42)
-	at io.quarkus.arc.impl.AroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:70)
-	at io.quarkus.arc.impl.AroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:62)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInCallerTx(TransactionalInterceptorBase.java:335)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired.doIntercept(TransactionalInterceptorRequired.java:40)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.intercept(TransactionalInterceptorBase.java:61)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired.intercept(TransactionalInterceptorRequired.java:32)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired_Bean.intercept(Unknown Source)
-	at io.quarkus.arc.impl.InterceptorInvocation.invoke(InterceptorInvocation.java:42)
-	at io.quarkus.arc.impl.AroundInvokeInvocationContext.perform(AroundInvokeInvocationContext.java:30)
-	at io.quarkus.arc.impl.InvocationContexts.performAroundInvoke(InvocationContexts.java:27)
-	at br.gov.caixa.service.SimulacaoService_Subclass.simularInvestimento(Unknown Source)
-	at br.gov.caixa.service.SimulacaoService_ClientProxy.simularInvestimento(Unknown Source)
-	at br.gov.caixa.resource.SimulacaoResource.addSimulacao(SimulacaoResource.java:51)
-	at br.gov.caixa.resource.SimulacaoResource_Subclass.addSimulacao$$superforward(Unknown Source)
-	at br.gov.caixa.resource.SimulacaoResource_Subclass$$function$$4.apply(Unknown Source)
-	at io.quarkus.arc.impl.AroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:73)
-	at io.quarkus.arc.impl.AroundInvokeInvocationContext.proceed(AroundInvokeInvocationContext.java:62)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInOurTx(TransactionalInterceptorBase.java:136)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.invokeInOurTx(TransactionalInterceptorBase.java:107)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired.doIntercept(TransactionalInterceptorRequired.java:38)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorBase.intercept(TransactionalInterceptorBase.java:61)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired.intercept(TransactionalInterceptorRequired.java:32)
-	at io.quarkus.narayana.jta.runtime.interceptor.TransactionalInterceptorRequired_Bean.intercept(Unknown Source)
-	at io.quarkus.arc.impl.InterceptorInvocation.invoke(InterceptorInvocation.java:42)
-	at io.quarkus.arc.impl.AroundInvokeInvocationContext.perform(AroundInvokeInvocationContext.java:30)
-	at io.quarkus.arc.impl.InvocationContexts.performAroundInvoke(InvocationContexts.java:27)
-	at br.gov.caixa.resource.SimulacaoResource_Subclass.addSimulacao(Unknown Source)
-	at br.gov.caixa.resource.SimulacaoResource_ClientProxy.addSimulacao(Unknown Source)
-	at br.gov.caixa.resource.SimulacaoResource$quarkusrestinvoker$addSimulacao_0ee3e377f49839b3d16ebeacb00730604461ab43.invoke(Unknown Source)
-	at org.jboss.resteasy.reactive.server.handlers.InvocationHandler.handle(InvocationHandler.java:29)
-	at io.quarkus.resteasy.reactive.server.runtime.QuarkusResteasyReactiveRequestContext.invokeHandler(QuarkusResteasyReactiveRequestContext.java:183)
-	at org.jboss.resteasy.reactive.common.core.AbstractResteasyReactiveContext.run(AbstractResteasyReactiveContext.java:147)
-	at io.quarkus.vertx.core.runtime.VertxCoreRecorder$15.runWith(VertxCoreRecorder.java:645)
-	at org.jboss.threads.EnhancedQueueExecutor$Task.doRunWith(EnhancedQueueExecutor.java:2651)
-	at org.jboss.threads.EnhancedQueueExecutor$Task.run(EnhancedQueueExecutor.java:2630)
-	at org.jboss.threads.EnhancedQueueExecutor.runThreadBody(EnhancedQueueExecutor.java:1622)
-	at org.jboss.threads.EnhancedQueueExecutor$ThreadBody.run(EnhancedQueueExecutor.java:1589)
-	at org.jboss.threads.DelegatingRunnable.run(DelegatingRunnable.java:11)
-	at org.jboss.threads.ThreadLocalResettingRunnable.run(ThreadLocalResettingRunnable.java:11)
-	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
-	at java.base/java.lang.Thread.run(Thread.java:1583)
-
-2025-11-25 14:10:11,428 bluejays-lenovo /usr/lib/jvm/java-21-openjdk-amd64/bin/java[186778] INFO  [io.qua.dep.dev.RuntimeUpdatesProcessor] (Aesh InputStream Reader) File change detected: /home/bluejays/IdeaProjects/investimentos-caixa/src/main/resources/import.sql
-2025-11-25 14:10:11,437 bluejays-lenovo /usr/lib/jvm/java-21-openjdk-amd64/bin/java[186778] INFO  [io.qua.dep.dev.RuntimeUpdatesProcessor] (Aesh InputStream Reader) Restarting quarkus due to changes in import.sql.
-2025-11-25 14:10:11,499 bluejays-lenovo /usr/lib/jvm/java-21-openjdk-amd64/bin/java[186778] INFO  [io.quarkus] (Quarkus Main Thread) investimentos-caixa stopped in 0.061s
+{"timestamp":"2025-11-25T14:19:24.942465764-03:00","sequence":2991,"loggerClassName":"org.jboss.logging.Logger","loggerName":"io.quarkus.config","level":"WARN","message":"The \"quarkus.log.file.enable\" config property is deprecated and should not be used anymore.","threadName":"Quarkus Main Thread","threadId":102,"mdc":{},"ndc":"","hostName":"bluejays-lenovo","processName":"/usr/lib/jvm/java-21-openjdk-amd64/bin/java","processId":190580}
+{"timestamp":"2025-11-25T14:19:24.942589296-03:00","sequence":2992,"loggerClassName":"org.jboss.logging.Logger","loggerName":"io.quarkus.config","level":"WARN","message":"The \"quarkus.hibernate-orm.database.generation\" config property is deprecated and should not be used anymore.","threadName":"Quarkus Main Thread","threadId":102,"mdc":{},"ndc":"","hostName":"bluejays-lenovo","processName":"/usr/lib/jvm/java-21-openjdk-amd64/bin/java","processId":190580}
+{"timestamp":"2025-11-25T14:19:25.295778861-03:00","sequence":2996,"loggerClassName":"org.jboss.logging.Logger","loggerName":"io.quarkus.scheduler.runtime.SimpleScheduler","level":"INFO","message":"No scheduled business methods found - Simple scheduler will not be started","threadName":"Quarkus Main Thread","threadId":102,"mdc":{},"ndc":"","hostName":"bluejays-lenovo","processName":"/usr/lib/jvm/java-21-openjdk-amd64/bin/java","processId":190580}
+{"timestamp":"2025-11-25T14:19:25.306407328-03:00","sequence":2997,"loggerClassName":"org.jboss.logging.Logger","loggerName":"io.quarkus","level":"INFO","message":"investimentos-caixa 1.0.0-SNAPSHOT on JVM (powered by Quarkus 3.29.4) started in 4.133s. Listening on: http://localhost:8080","threadName":"Quarkus Main Thread","threadId":102,"mdc":{},"ndc":"","hostName":"bluejays-lenovo","processName":"/usr/lib/jvm/java-21-openjdk-amd64/bin/java","processId":190580}
+{"timestamp":"2025-11-25T14:19:25.308651164-03:00","sequence":2998,"loggerClassName":"org.jboss.logging.Logger","loggerName":"io.quarkus","level":"INFO","message":"Profile dev activated. Live Coding activated.","threadName":"Quarkus Main Thread","threadId":102,"mdc":{},"ndc":"","hostName":"bluejays-lenovo","processName":"/usr/lib/jvm/java-21-openjdk-amd64/bin/java","processId":190580}
+{"timestamp":"2025-11-25T14:19:25.309637388-03:00","sequence":2999,"loggerClassName":"org.jboss.logging.Logger","loggerName":"io.quarkus","level":"INFO","message":"Installed features: [agroal, cdi, compose, hibernate-orm, hibernate-orm-panache, hibernate-validator, jdbc-postgresql, narayana-jta, rest, rest-jackson, scheduler, smallrye-context-propagation, smallrye-openapi, swagger-ui, vertx]","threadName":"Quarkus Main Thread","threadId":102,"mdc":{},"ndc":"","hostName":"bluejays-lenovo","processName":"/usr/lib/jvm/java-21-openjdk-amd64/bin/java","processId":190580}
+{"timestamp":"2025-11-25T14:19:25.310698697-03:00","sequence":3000,"loggerClassName":"org.jboss.logging.Logger","loggerName":"io.quarkus.deployment.dev.RuntimeUpdatesProcessor","level":"INFO","message":"Live reload total time: 4.275s ","threadName":"Aesh InputStream Reader","threadId":41,"mdc":{},"ndc":"","hostName":"bluejays-lenovo","processName":"/usr/lib/jvm/java-21-openjdk-amd64/bin/java","processId":190580}
+{"timestamp":"2025-11-25T14:22:46.554485929-03:00","sequence":3001,"loggerClassName":"org.jboss.logging.Logger","loggerName":"io.quarkus.deployment.dev.RuntimeUpdatesProcessor","level":"INFO","message":"File change detected: /home/bluejays/IdeaProjects/investimentos-caixa/src/main/resources/application.properties","threadName":"vert.x-worker-thread-5","threadId":110,"mdc":{},"ndc":"","hostName":"bluejays-lenovo","processName":"/usr/lib/jvm/java-21-openjdk-amd64/bin/java","processId":190580}
+{"timestamp":"2025-11-25T14:22:46.570041456-03:00","sequence":3002,"loggerClassName":"org.jboss.logging.Logger","loggerName":"io.quarkus.deployment.dev.RuntimeUpdatesProcessor","level":"INFO","message":"Restarting quarkus due to changes in application.properties.","threadName":"vert.x-worker-thread-5","threadId":110,"mdc":{},"ndc":"","hostName":"bluejays-lenovo","processName":"/usr/lib/jvm/java-21-openjdk-amd64/bin/java","processId":190580}
+{"timestamp":"2025-11-25T14:22:46.624982286-03:00","sequence":3003,"loggerClassName":"org.jboss.logging.Logger","loggerName":"io.quarkus","level":"INFO","message":"investimentos-caixa stopped in 0.053s","threadName":"Quarkus Main Thread","threadId":102,"mdc":{},"ndc":"","hostName":"bluejays-lenovo","processName":"/usr/lib/jvm/java-21-openjdk-amd64/bin/java","processId":190580}

@@ -44,7 +44,7 @@ public class SimulacaoResource {
     @Operation(summary = "Simular investimento", description = "Realiza simulação de investimento baseada nos parâmetros fornecidos")
     @APIResponse(responseCode = "200", description = "Simulação realizada com sucesso")
     @APIResponse(responseCode = "400", description = "Dados de entrada inválidos")
-    //@RolesAllowed({"admin"})
+    @RolesAllowed({"user"})
     public Response addSimulacao(SimulacaoRequest request){
         long inicio = System.currentTimeMillis();
         try {
@@ -58,7 +58,7 @@ public class SimulacaoResource {
 
     @GET
     @Operation(summary = "Listar simulações", description = "Retorna todas as simulações realizadas")
-    //@RolesAllowed({"user"})
+    @RolesAllowed({"admin"})
     public Response getSimulacoes(){
         long inicio = System.currentTimeMillis();
         try {
@@ -73,7 +73,7 @@ public class SimulacaoResource {
 
     @GET
     @Path("/por-produto-dia")
-    //@RolesAllowed("user")
+    @RolesAllowed("admin")
     @Operation(summary = "Simulações por produto e dia", description = "Retorna estatísticas de simulações agrupadas por produto e data")
     public Response getSimulacoesPorProdutoDia() {
         long inicio = System.currentTimeMillis();

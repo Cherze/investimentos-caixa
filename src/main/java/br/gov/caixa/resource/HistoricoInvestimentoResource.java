@@ -29,7 +29,7 @@ public class HistoricoInvestimentoResource {
 
     @GET
     @Path("/{clienteId}")
-    @RolesAllowed("user")
+    @RolesAllowed("admin")
     @Operation(summary = "Histórico de investimentos", description = "Retorna o histórico de investimentos do cliente")
     public Response obterHistoricoInvestimentos(@PathParam("clienteId") Long clienteId) {
         long inicio = System.currentTimeMillis();
