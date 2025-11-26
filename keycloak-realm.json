@@ -1,0 +1,71 @@
+{
+  "id": "investimentos-realm",
+  "realm": "investimentos-realm",
+  "enabled": true,
+  "sslRequired": "none",
+  "registrationAllowed": true,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": true,
+  "editUsernameAllowed": false,
+  "clients": [
+    {
+      "clientId": "investment-app",
+      "enabled": true,
+      "secret": "app",
+      "protocol": "openid-connect",
+      "publicClient": false,
+      "redirectUris": [
+        "http://localhost:8080/*",
+        "http://localhost:8080"
+      ],
+      "webOrigins": ["*"],
+      "attributes": {
+        "backchannel.logout.session.required": "true",
+        "backchannel.logout.revoke.offline.tokens": "false"
+      }
+    }
+  ],
+  "users": [
+    {
+      "username": "admin",
+      "email": "admin@investimentos.com",
+      "firstName": "Admin",
+      "lastName": "User",
+      "enabled": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "admin"
+        }
+      ],
+      "realmRoles": ["admin", "user"]
+    },
+    {
+      "username": "user",
+      "email": "user@investimentos.com",
+      "firstName": "Regular",
+      "lastName": "User",
+      "enabled": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "user"
+        }
+      ],
+      "realmRoles": ["user"]
+    }
+  ],
+  "roles": {
+    "realm": [
+      {
+        "name": "admin",
+        "description": "Administrator role"
+      },
+      {
+        "name": "user",
+        "description": "Regular user role"
+      }
+    ]
+  }
+}
